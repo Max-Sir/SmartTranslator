@@ -14,7 +14,7 @@
             tools:context=".ScanResultsScreenActivity"
             tools:ignore="ScrollViewSize">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/qr_result_image_view"
                 android:layout_width="@dimen/qr_scanner_zone"
                 android:layout_height="@dimen/qr_scanner_zone"
