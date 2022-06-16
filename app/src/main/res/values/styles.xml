@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="h7TextViewStyle">
+        <item name="android:gravity">fill|center</item>
+        <item name="android:textSize">@dimen/h7_text_size</item>
+    </style>
+
+    <dimen name="h7_text_size">27sp</dimen>
+</resources>

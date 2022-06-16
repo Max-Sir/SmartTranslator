@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ScanResultsScreenActivity"
+            tools:ignore="ScrollViewSize">
+
+            <ImageView
+                android:id="@+id/qr_result_image_view"
+                android:layout_width="@dimen/qr_scanner_zone"
+                android:layout_height="@dimen/qr_scanner_zone"
+                android:layout_marginTop="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/final_screen_text"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/final_screen_text"
+                style="@style/h7TextViewStyle"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@string/qr_you_scanned_was"
+                app:flow_firstHorizontalBias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/results_text"
+                style="@style/h7TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/qr_result_image_view"
+                app:layout_constraintStart_toStartOf="@+id/qr_result_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/qr_result_image_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

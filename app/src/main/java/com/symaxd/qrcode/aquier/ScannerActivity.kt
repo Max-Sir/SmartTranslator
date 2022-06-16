@@ -1,6 +1,7 @@
 package com.symaxd.qrcode.aquier
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,8 +17,10 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.gms.vision.Detector.Detections
+import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
 import com.symaxd.qrcode.aquier.databinding.ActivityScannerBinding
 
+/** Scanner Activity to recognize QR code as bitmap and return the given information*/
 class ScannerActivity : AppCompatActivity() {
     private val requestCodeCameraPermission = 1001
     private lateinit var cameraSource: CameraSource
@@ -46,14 +49,14 @@ class ScannerActivity : AppCompatActivity() {
         binding.barcodeLine.startAnimation(aniSlide)
     }
 
-
+    /**setting up the controllers of the ui*/
     private fun setupControls() {
         barcodeDetector =
             BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build()
 
         cameraSource = CameraSource.Builder(this, barcodeDetector)
-            .setRequestedPreviewSize(350, 350)//actual size of scanner /could set 1920*1080
-            .setAutoFocusEnabled(true) //you should add this feature
+            .setRequestedPreviewSize(1920, 1080) //resolution of the scanner camera
+            .setAutoFocusEnabled(true) // needed to auto focus which helps recognize the qr code picture
             .build()
 
         binding.cameraSurfaceView.getHolder().addCallback(object : SurfaceHolder.Callback {
@@ -102,11 +105,18 @@ class ScannerActivity : AppCompatActivity() {
                     //Don't forget to add this line printing value or finishing activity must run on main thread
                     runOnUiThread {
                         cameraSource.stop()
-                        Toast.makeText(this@ScannerActivity, "value- $scannedValue", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@ScannerActivity,
+                            "value- $scannedValue",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val intent =
+                            Intent(this@ScannerActivity, ScanResultsScreenActivity::class.java)
+                        intent.putExtra(QR_CODE_DECODED_RESULT, scannedValue)
+                        startActivity(intent)
                         finish()
                     }
-                }else
-                {
+                } else {
                     Toast.makeText(this@ScannerActivity, "value- else", Toast.LENGTH_SHORT).show()
 
                 }

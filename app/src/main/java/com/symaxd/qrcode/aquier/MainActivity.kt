@@ -16,32 +16,18 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.symaxd.qrcode.aquier.databinding.ActivityMainBinding
 
+/** Home Activity*/
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    fun getQrCodeBitmap(password: String): Bitmap {
-        val size = 512 //pixels
-        val qrCodeContent = "$password"
-        val hints = hashMapOf<EncodeHintType, Int>().also {
-            it[EncodeHintType.MARGIN] = 1
-        } // Make the QR code buffer border narrower
-        val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
-        return Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
-            for (x in 0 until size) {
-                for (y in 0 until size) {
-                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
-                }
-            }
-        }
-    }
-
-
+    /**Configuring and inflating the menu resource to the view */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**Processing of selected menu items*/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.scan_qr_code -> {
@@ -51,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /** Initializes the ui */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,13 +45,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.generate.setOnClickListener {
             val text = binding.editText.text.toString()
-            when (text.isNullOrEmpty()) {
-                false -> it.setBackgroundDrawable(
-                    BitmapDrawable(
-                        resources,
-                        getQrCodeBitmap(text)
-                    )
-                )
+            when (text.isEmpty()) {
+                false -> it.setBitmapQrCode(this@MainActivity, text)
                 else -> {
                     Toast.makeText(this, "text was empty or null '$text'", Toast.LENGTH_LONG).show()
                     this.finish()
