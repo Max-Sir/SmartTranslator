@@ -1,4 +1,4 @@
-package com.symaxd.qrcode.aquier
+package com.symaxd.qrcode.aquier.core
 
 import android.graphics.Bitmap
 import android.graphics.Color

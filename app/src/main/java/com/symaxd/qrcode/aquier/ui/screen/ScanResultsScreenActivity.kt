@@ -1,9 +1,10 @@
-package com.symaxd.qrcode.aquier
+package com.symaxd.qrcode.aquier.ui.screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
 import com.symaxd.qrcode.aquier.databinding.ActivityScanResultsScreenBinding
+import com.symaxd.qrcode.aquier.setBitmapQrCode
 
 /**Activity to show scan results*/
 class ScanResultsScreenActivity : AppCompatActivity() {

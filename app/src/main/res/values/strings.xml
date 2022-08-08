@@ -3,4 +3,9 @@
     <string name="enter_text">Enter text:</string>
     <string name="scan">Scan</string>
     <string name="qr_you_scanned_was">Qr you scanned was</string>
+    <string name="prompt_info_title">Could you authorize please</string>
+    <string name="prompt_info_subtitle">it\'s required to sign in without password</string>
+    <string name="prompt_info_description">put your finger on the scanner</string>
+    <string name="prompt_info_use_app_password">if you couldn\'t access you re always may sign in as in the past</string>
+    <string name="qr_code_picture_text_description">QR Code picture</string>
 </resources>
