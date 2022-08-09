@@ -14,7 +14,9 @@ object BiometricPromptUtils {
     private const val TAG = "BiometricPromptUtils"
     fun createBiometricPrompt(
         activity: AppCompatActivity,
-        processSuccess: (BiometricPrompt.AuthenticationResult) -> Unit
+        processSuccess: (BiometricPrompt.AuthenticationResult) -> Unit,
+        processFail: (() -> Unit)? = null,
+        processError: (() -> Unit)? = null
     ): BiometricPrompt {
         val executor = ContextCompat.getMainExecutor(activity)
 
@@ -23,11 +25,13 @@ object BiometricPromptUtils {
             override fun onAuthenticationError(errCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errCode, errString)
                 Timber.tag(TAG).d("errCode is $errCode and errString is: $errString")
+                processError?.invoke()
             }
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
                 Timber.tag(TAG).d("User biometric rejected.")
+                processFail?.invoke()
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
