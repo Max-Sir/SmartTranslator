@@ -1,12 +1,10 @@
 package com.symaxd.qrcode.aquier.ui.screen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import com.symaxd.qrcode.aquier.ui.fragments.LoginFragment
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.symaxd.qrcode.aquier.R
-import com.symaxd.qrcode.aquier.ui.fragments.RegistrationFragment
+import com.symaxd.qrcode.aquier.ui.fragments.LoginFragment
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,25 +18,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.login_menu,menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            R.id.sign_up_menu_item ->{
-//                val fragment = RegistrationFragment.newInstance()
-//                supportFragmentManager.beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .replace(R.id.container,fragment)
-//                    .commitNow()
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
-    override fun onNavigateUp(): Boolean {
-        return super.onNavigateUp()
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.logout_question))
+            .setMessage(getString(R.string.are_you_sure_you_want_to_logout_question))
+            .setPositiveButton(getText(R.string.yes)) { dialog, _ ->
+                finish()
+                dialog.cancel()
+            }
+            .setNegativeButton(getText(R.string.no)) { dialog, _ ->
+                dialog.cancel()
+            }
+            .create()
+            .show()
     }
 }

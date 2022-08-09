@@ -19,4 +19,8 @@
     <string name="sign_up_text">Sign Up</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="are_you_sure_you_want_to_logout_question">Are you sure you want to logout?</string>
+    <string name="logout_question">Exit</string>
 </resources>
