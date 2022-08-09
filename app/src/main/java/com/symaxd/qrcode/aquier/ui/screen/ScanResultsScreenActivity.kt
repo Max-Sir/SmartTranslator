@@ -9,9 +9,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import com.symaxd.qrcode.aquier.BuildConfig
 import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
 import com.symaxd.qrcode.aquier.databinding.ActivityScanResultsScreenBinding
 import com.symaxd.qrcode.aquier.setBitmapQrCode
+import timber.log.Timber
 import java.io.File
 
 
@@ -34,7 +36,7 @@ class ScanResultsScreenActivity : AppCompatActivity() {
 
     private fun sharePalette(bitmap: Bitmap) {
         val bitmapUri: Uri = getTmpFileUri(bitmap)
-        Log.i("ewg",bitmapUri.toString())
+        Timber.i("ewg",bitmapUri.toString())
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "image/png"
         intent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
