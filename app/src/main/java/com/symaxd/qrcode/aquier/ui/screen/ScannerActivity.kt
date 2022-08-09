@@ -1,4 +1,4 @@
-package com.symaxd.qrcode.aquier
+package com.symaxd.qrcode.aquier.ui.screen
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -18,6 +18,7 @@ import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.gms.vision.Detector.Detections
 import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
+import com.symaxd.qrcode.aquier.R
 import com.symaxd.qrcode.aquier.databinding.ActivityScannerBinding
 
 /** Scanner Activity to recognize QR code as bitmap and return the given information*/

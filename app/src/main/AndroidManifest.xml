@@ -35,21 +35,32 @@
         </provider>
 
         <activity
-            android:name=".ScanResultsScreenActivity"
+            android:name=".ui.screen.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.screen.ScanResultsScreenActivity"
             android:exported="false"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".ScannerActivity"
+            android:name=".ui.screen.ScannerActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.screen.HomeActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="ocr" />
     </application>
 
 </manifest>

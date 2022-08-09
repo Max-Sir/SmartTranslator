@@ -1,4 +1,4 @@
-package com.symaxd.qrcode.aquier
+package com.symaxd.qrcode.aquier.ui.screen
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
 import com.symaxd.qrcode.aquier.databinding.ActivityScanResultsScreenBinding
+import com.symaxd.qrcode.aquier.setBitmapQrCode
 import java.io.File
 
 
