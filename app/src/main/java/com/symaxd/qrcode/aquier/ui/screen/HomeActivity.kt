@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showBiometricPromptForEncryption()
-        
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.generate.setOnClickListener {
@@ -70,7 +70,7 @@ class HomeActivity : AppCompatActivity() {
             val secretKeyName = "biometric_sample_encryption_key"
             val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
             val biometricPrompt =
-                BiometricPromptUtils.createBiometricPrompt(this, ::encryptAndStoreUsername)
+                BiometricPromptUtils.createBiometricPrompt(this, ::encryptAndStoreUsername,this::finish)
             val promptInfo = BiometricPromptUtils.createPromptInfo(this)
             biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
         }

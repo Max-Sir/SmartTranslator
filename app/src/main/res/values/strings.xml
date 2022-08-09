@@ -8,4 +8,15 @@
     <string name="prompt_info_description">put your finger on the scanner</string>
     <string name="prompt_info_use_app_password">if you couldn\'t access you re always may sign in as in the past</string>
     <string name="qr_code_picture_text_description">QR Code picture</string>
+    <string name="username_string">Username</string>
+    <string name="prompt_password">password:</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="your_email_welcome">Email:</string>
+    <string name="your_surname_welcome">"surname: "</string>
+    <string name="your_name_welcome">first name:</string>
+    <string name="action_sign_in">Sign Up</string>
+    <string name="your_phone_welcome">phone number:</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
 </resources>
