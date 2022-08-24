@@ -1,12 +1,11 @@
 package com.symaxd.qrcode.aquier.ui.screen
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import com.symaxd.qrcode.aquier.ui.fragments.LoginFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.symaxd.qrcode.aquier.R
-import com.symaxd.qrcode.aquier.ui.fragments.RegistrationFragment
+import com.symaxd.qrcode.aquier.ui.fragments.LoginFragment
+import com.symaxd.qrcode.aquier.ui.util.exitAlertDialog
 
 class LoginActivity : AppCompatActivity() {
 
@@ -18,27 +17,11 @@ class LoginActivity : AppCompatActivity() {
                 .replace(R.id.container, LoginFragment.newInstance())
                 .commitNow()
         }
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.login_menu,menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            R.id.sign_up_menu_item ->{
-//                val fragment = RegistrationFragment.newInstance()
-//                supportFragmentManager.beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .replace(R.id.container,fragment)
-//                    .commitNow()
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
-    override fun onNavigateUp(): Boolean {
-        return super.onNavigateUp()
+    override fun onBackPressed() {
+        exitAlertDialog(this, this::finish)
     }
 }

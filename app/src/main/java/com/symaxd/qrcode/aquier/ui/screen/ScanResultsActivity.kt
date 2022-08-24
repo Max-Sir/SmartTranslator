@@ -4,8 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
@@ -18,15 +16,15 @@ import java.io.File
 
 
 /**Activity to show scan results*/
-class ScanResultsScreenActivity : AppCompatActivity() {
+class ScanResultsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanResultsScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanResultsScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val resultText = intent?.extras?.getString(QR_CODE_DECODED_RESULT) ?: ""
+        val resultText = intent?.extras?.getString(QR_CODE_DECODED_RESULT) ?: "NONE"
         with(binding.qrResultImageView) {
-            setBitmapQrCode(this@ScanResultsScreenActivity, resultText)
+            setBitmapQrCode(this@ScanResultsActivity, resultText)
             setOnClickListener {
                 sharePalette(it.background.toBitmap())
             }
@@ -36,14 +34,14 @@ class ScanResultsScreenActivity : AppCompatActivity() {
 
     private fun sharePalette(bitmap: Bitmap) {
         val bitmapUri: Uri = getTmpFileUri(bitmap)
-        Timber.i("ewg",bitmapUri.toString())
+        Timber.i("bitmap URI", bitmapUri.toString())
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "image/png"
         intent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
         startActivity(Intent.createChooser(intent, "Share Image"))
     }
 
-    private fun getTmpFileUri(bitmap:Bitmap): Uri {
+    private fun getTmpFileUri(bitmap: Bitmap): Uri {
         val tmpFile = File.createTempFile("tmp_image_file", ".png").apply {
             createNewFile()
             this.outputStream().use {
