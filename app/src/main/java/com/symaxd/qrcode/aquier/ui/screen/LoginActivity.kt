@@ -1,10 +1,11 @@
 package com.symaxd.qrcode.aquier.ui.screen
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.symaxd.qrcode.aquier.R
 import com.symaxd.qrcode.aquier.ui.fragments.LoginFragment
+import com.symaxd.qrcode.aquier.ui.util.exitAlertDialog
 
 class LoginActivity : AppCompatActivity() {
 
@@ -16,20 +17,11 @@ class LoginActivity : AppCompatActivity() {
                 .replace(R.id.container, LoginFragment.newInstance())
                 .commitNow()
         }
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 
     override fun onBackPressed() {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.logout_question))
-            .setMessage(getString(R.string.are_you_sure_you_want_to_logout_question))
-            .setPositiveButton(getText(R.string.yes)) { dialog, _ ->
-                finish()
-                dialog.cancel()
-            }
-            .setNegativeButton(getText(R.string.no)) { dialog, _ ->
-                dialog.cancel()
-            }
-            .create()
-            .show()
+        exitAlertDialog(this, this::finish)
     }
 }

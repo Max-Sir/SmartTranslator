@@ -3,23 +3,23 @@ package com.symaxd.qrcode.aquier.ui.screen
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.SurfaceHolder
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.io.IOException
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
+import com.google.android.gms.vision.Detector.Detections
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
-import com.google.android.gms.vision.Detector.Detections
 import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
 import com.symaxd.qrcode.aquier.R
 import com.symaxd.qrcode.aquier.databinding.ActivityScannerBinding
+import java.io.IOException
 
 /** Scanner Activity to recognize QR code as bitmap and return the given information*/
 class ScannerActivity : AppCompatActivity() {
@@ -112,7 +112,7 @@ class ScannerActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         val intent =
-                            Intent(this@ScannerActivity, ScanResultsScreenActivity::class.java)
+                            Intent(this@ScannerActivity, ScanResultsActivity::class.java)
                         intent.putExtra(QR_CODE_DECODED_RESULT, scannedValue)
                         startActivity(intent)
                         finish()

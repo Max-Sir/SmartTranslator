@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.symaxd.qrcode.aquier">
 
@@ -17,9 +18,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/qr_translator_app_icon"
+        android:icon="@drawable/qr_translator_app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.QRCodeAquier"
         tools:targetApi="31">
@@ -45,14 +46,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.screen.ScanResultsScreenActivity"
+            android:name=".ui.screen.ScanResultsActivity"
             android:exported="false"
+            android:screenOrientation="locked"
             android:launchMode="singleInstance" />
         <activity
             android:name=".ui.screen.ScannerActivity"
+            android:screenOrientation="locked"
             android:exported="false" />
         <activity
             android:name=".ui.screen.HomeActivity"
+            android:screenOrientation="locked"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
