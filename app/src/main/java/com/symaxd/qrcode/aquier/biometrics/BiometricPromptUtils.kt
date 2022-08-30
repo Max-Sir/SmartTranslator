@@ -11,7 +11,6 @@ object BiometricPromptUtils {
     const val SHARED_PREFS_FILENAME = "biometric_prefs"
     const val CIPHERTEXT_WRAPPER = "ciphertext_wrapper"
 
-    private const val TAG = "BiometricPromptUtils"
     fun createBiometricPrompt(
         activity: AppCompatActivity,
         processSuccess: (BiometricPrompt.AuthenticationResult) -> Unit,
@@ -24,19 +23,19 @@ object BiometricPromptUtils {
 
             override fun onAuthenticationError(errCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errCode, errString)
-                Timber.tag(TAG).d("errCode is $errCode and errString is: $errString")
+                Timber.i("errCode is $errCode and errString is: $errString")
                 processError?.invoke()
             }
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                Timber.tag(TAG).d("User biometric rejected.")
+                Timber.i("User biometric rejected.")
                 processFail?.invoke()
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                Timber.tag(TAG).d("Authentication was successful")
+                Timber.i("Authentication was successful")
                 processSuccess(result)
             }
         }

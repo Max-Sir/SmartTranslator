@@ -2,29 +2,53 @@ package com.symaxd.qrcode.aquier.ui.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.symaxd.qrcode.aquier.BuildConfig
 import com.symaxd.qrcode.aquier.R
+import com.symaxd.qrcode.aquier.databinding.FragmentLoginBinding
 import com.symaxd.qrcode.aquier.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     companion object {
         fun newInstance() = LoginFragment()
     }
 
-    private lateinit var viewModel: LoginViewModel
+    @Inject
+    lateinit var viewModel: LoginViewModel
 
+    private lateinit var binding: FragmentLoginBinding
+
+    @Suppress("DEPRECATION")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_login, container, false)
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        binding.login.setOnClickListener {
+            viewModel.loginUser(binding.userLoginInput.text.toString())
+        }
+
+        viewModel.userNoFoundEvent.observe(viewLifecycleOwner) {
+            if (BuildConfig.ALLOW_TEST_FEATURES && it) {
+                Toast.makeText(this.activity, "Not found", Toast.LENGTH_LONG).show()
+                viewModel.endUserNoFoundEvent()
+            }
+        }
+        viewModel.user.observe(viewLifecycleOwner) {
+            if (BuildConfig.ALLOW_TEST_FEATURES)
+                Toast.makeText(this.requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+        }
 
         requireActivity().title = "Sign In"
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

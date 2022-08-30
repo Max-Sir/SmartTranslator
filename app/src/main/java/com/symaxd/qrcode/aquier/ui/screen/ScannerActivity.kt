@@ -11,17 +11,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.Detector.Detections
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.symaxd.qrcode.aquier.BuildConfig
 import com.symaxd.qrcode.aquier.Constants.Companion.QR_CODE_DECODED_RESULT
 import com.symaxd.qrcode.aquier.R
 import com.symaxd.qrcode.aquier.databinding.ActivityScannerBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 /** Scanner Activity to recognize QR code as bitmap and return the given information*/
+@AndroidEntryPoint
 class ScannerActivity : AppCompatActivity() {
     private val requestCodeCameraPermission = 1001
     private lateinit var cameraSource: CameraSource
@@ -106,11 +111,16 @@ class ScannerActivity : AppCompatActivity() {
                     //Don't forget to add this line printing value or finishing activity must run on main thread
                     runOnUiThread {
                         cameraSource.stop()
-                        Toast.makeText(
-                            this@ScannerActivity,
-                            "value- $scannedValue",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if (BuildConfig.ALLOW_TEST_FEATURES) {
+                            lifecycleScope.launch {
+
+                                Toast.makeText(
+                                    this@ScannerActivity,
+                                    scannedValue,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                         val intent =
                             Intent(this@ScannerActivity, ScanResultsActivity::class.java)
                         intent.putExtra(QR_CODE_DECODED_RESULT, scannedValue)

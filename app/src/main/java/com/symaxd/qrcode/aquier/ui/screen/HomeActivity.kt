@@ -2,11 +2,11 @@ package com.symaxd.qrcode.aquier.ui.screen
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.symaxd.qrcode.aquier.R
@@ -15,20 +15,27 @@ import com.symaxd.qrcode.aquier.biometrics.BiometricPromptUtils.CIPHERTEXT_WRAPP
 import com.symaxd.qrcode.aquier.biometrics.BiometricPromptUtils.SHARED_PREFS_FILENAME
 import com.symaxd.qrcode.aquier.biometrics.CiphertextWrapper
 import com.symaxd.qrcode.aquier.biometrics.CryptographyManagerImpl
-import com.symaxd.qrcode.aquier.databinding.ActivityMainBinding
+import com.symaxd.qrcode.aquier.databinding.ActivityHomeBinding
 import com.symaxd.qrcode.aquier.setBitmapQrCode
+import com.symaxd.qrcode.aquier.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 /** Home Activity*/
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
 
+    @Inject
+    lateinit var viewModel: HomeViewModel
     private val cryptographyManager by lazyOf(CryptographyManagerImpl())
     private var ciphertextWrapper: CiphertextWrapper? = null
 
     /**Configuring and inflating the menu resource to the view */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -48,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         showBiometricPromptForEncryption()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.generate.setOnClickListener {
             val text = binding.editText.text.toString()
@@ -70,7 +77,11 @@ class HomeActivity : AppCompatActivity() {
             val secretKeyName = "biometric_sample_encryption_key"
             val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
             val biometricPrompt =
-                BiometricPromptUtils.createBiometricPrompt(this, ::encryptAndStoreUsername,this::finish)
+                BiometricPromptUtils.createBiometricPrompt(
+                    this,
+                    ::encryptAndStoreUsername,
+                    this::finish
+                )
             val promptInfo = BiometricPromptUtils.createPromptInfo(this)
             biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
         }
@@ -104,7 +115,7 @@ class HomeActivity : AppCompatActivity() {
         authResult.cryptoObject?.cipher?.apply {
 //            val text = binding.username.text.toString()
             Timber.plant(Timber.DebugTree())
-//            Timber.d("text before: $text")
+//            TimberImpl.d("text before: $text")
             val encryptedServerTokenWrapper =
                 cryptographyManager.encryptData("", this)
             Timber.d("ciphertext is now is: ${encryptedServerTokenWrapper.ciphertext}")

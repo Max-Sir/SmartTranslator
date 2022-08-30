@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -17,8 +18,14 @@ android {
         targetSdk 32
         versionCode 2
         versionName "1.0.0 EAP"
+        multiDexEnabled true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "listener", "leakcanary.FailTestOnLeakRunListener"
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues true
     }
 
     buildTypes {
@@ -27,11 +34,49 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    def env_flavor = "enviroment"
+    flavorDimensions "$env_flavor"
+    productFlavors {
+        def APP_NAME = "app_name"
+        def ALLOW_TEST_FEATURES = "ALLOW_TEST_FEATURES"
+
+        production {
+            dimension env_flavor
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+            resValue "string", APP_NAME, "QR code Translator"
+            buildConfigField "boolean", ALLOW_TEST_FEATURES, "false"
+
+        }
+        preProduction {
+            dimension env_flavor
+            resValue "string", APP_NAME, "QR code Translator BETA"
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+            applicationIdSuffix ".beta"
+            buildConfigField "boolean", ALLOW_TEST_FEATURES, "false"
+
+        }
+        qa {
+            resValue "string", APP_NAME, "QR code Translator QA"
+            dimension env_flavor
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
+            applicationIdSuffix ".qa"
+            buildConfigField "boolean", ALLOW_TEST_FEATURES, "true"
+        }
+
+        development {
+            resValue "string", APP_NAME, "QR code Translator DEV"
+            dimension env_flavor
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
+            applicationIdSuffix ".dev"
+            buildConfigField "boolean", ALLOW_TEST_FEATURES, "true"
+
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding{
+    dataBinding {
         enabled true
     }
     kotlinOptions {
@@ -41,6 +86,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.multidex:multidex:$multidex_version")
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.1'
     implementation 'com.github.AppIntro:AppIntro:6.2.0'
     implementation 'com.google.android.gms:play-services-vision:20.1.3'
@@ -66,8 +112,26 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'junit:junit:4.+'
     implementation 'androidx.test.espresso:espresso-core:3.4.0'
-
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryDevelopmentVersion"
+//    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryDevelopmentVersion"
     /**QR Code Generator*/
 //    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
     implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    kapt 'androidx.room:room-compiler:2.5.0-alpha02'
+    implementation 'androidx.room:room-ktx:2.5.0-alpha02'
+    implementation 'androidx.room:room-runtime:2.5.0-alpha02'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10'
+    kapt 'com.google.dagger:dagger-compiler:2.43.2'
+    implementation 'com.google.dagger:dagger:2.43.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha01'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    implementation 'com.google.dagger:hilt-android:2.43.2'
+    kapt 'com.google.dagger:hilt-android-compiler:2.43.2'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
 }
