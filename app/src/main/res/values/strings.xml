@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">QRCodeAquier</string>
     <string name="enter_text">Enter text:</string>
     <string name="scan">Scan</string>
     <string name="qr_you_scanned_was">Qr you scanned was</string>
