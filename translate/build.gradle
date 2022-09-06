@@ -21,6 +21,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    def ENV_DIMENSION = "enviroment"
+    flavorDimensions ENV_DIMENSION
+
+    productFlavors {
+        qa {
+            dimension ENV_DIMENSION
+        }
+        production {
+            dimension ENV_DIMENSION
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
