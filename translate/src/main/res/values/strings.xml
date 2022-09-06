@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ML Kit Translate Codelab</string>
+    <string name="unknown_error">Unknown error occurred.</string>
+    <string name="overlay_help">Center text in box</string>
+    <string name="downloading_model_files">Downloading model files...</string>
+    <string name="powered_by_maksim_syramalotau_copyright">powered by Maksim Syramalotau</string>
+</resources>

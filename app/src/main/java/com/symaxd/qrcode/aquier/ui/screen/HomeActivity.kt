@@ -2,11 +2,11 @@ package com.symaxd.qrcode.aquier.ui.screen
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.symaxd.qrcode.aquier.R
@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
     private var ciphertextWrapper: CiphertextWrapper? = null
 
     /**Configuring and inflating the menu resource to the view */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -70,7 +70,11 @@ class HomeActivity : AppCompatActivity() {
             val secretKeyName = "biometric_sample_encryption_key"
             val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
             val biometricPrompt =
-                BiometricPromptUtils.createBiometricPrompt(this, ::encryptAndStoreUsername,this::finish)
+                BiometricPromptUtils.createBiometricPrompt(
+                    this,
+                    ::encryptAndStoreUsername,
+                    this::finish
+                )
             val promptInfo = BiometricPromptUtils.createPromptInfo(this)
             biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
         }
